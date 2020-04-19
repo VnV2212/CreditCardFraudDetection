@@ -163,6 +163,7 @@ print(" Accuracy score is ", accuracy_score(y_test, predictions3))
 print(confusion_matrix(y_test, predictions3))
 
 
+#Classifier4
 classifier4 = KNeighborsClassifier()
 classifier4.fit(x_train2, y_train2)
 predictions4 = classifier4.predict(x_test)
