@@ -120,3 +120,73 @@ print(" Precision is ", precision_score(train_test_y, predictions, average="bina
 print(" F1 score is ", f1_score(train_test_y, predictions, average="binary"))
 # Accuracy score doesn't matter here as this is a skew dataset.
 print(" Accuracy score is ", accuracy_score(train_test_y, predictions))
+
+# classifier2
+ccset = pd.read_csv('creditcard.csv')
+y = ccset['Class']
+x = ccset.drop(['Class', 'Amount', 'Time', 'V19', 'V21', 'V1', 'V2', 'V6', 'V5', 'V28', 'V27', 'V26', 'V25', 'V24', 'V23', 'V22', 'V20',
+     'V15', 'V13', 'V8'], axis=1)
+x = x.values
+y = y.values
+x_train2, x_test2, y_train2, y_test2 = train_test_split(x, y, test_size=0.2)
+classifier2 = RandomForestClassifier(n_estimators=100)
+classifier2.fit(x_train2, y_train2)
+
+predictions2 = classifier2.predict(x_test2)
+
+print(" Recall is ", recall_score(y_test2, predictions2))
+print(" Precision is ", precision_score(y_test2, predictions2))
+print(" F1 score is ", f1_score(y_test2, predictions2))
+# Accuracy score doesn't matter here aws this is a skew dataset.
+print(" Accuracy score is ", accuracy_score(y_test2, predictions2))
+print(confusion_matrix(y_test2, predictions2))
+print(classification_report(y_test2, predictions2))
+
+classfier3
+classifier3 = IsolationForest(n_estimators=100, max_samples=100)
+classifier3.fit(x_train)
+
+tmp = classifier3.predict(x_test)
+predictions3 = []
+for i in tmp:
+    if i == 1:
+        predictions3.append(0)
+    else:
+        predictions3.append(1)
+predictions3 = np.asarray(predictions3)
+
+print(" Recall is ", recall_score(y_test, predictions3))
+print(" Precision is ", precision_score(y_test, predictions3))
+print(" F1 score is ", f1_score(y_test, predictions3))
+# Accuracy score doesn't matter here aws this is a skew dataset.
+print(" Accuracy score is ", accuracy_score(y_test, predictions3))
+print(confusion_matrix(y_test, predictions3))
+
+
+classifier4 = KNeighborsClassifier()
+classifier4.fit(x_train2, y_train2)
+predictions4 = classifier4.predict(x_test)
+predictions4 = np.asarray(predictions4)
+
+print(" Recall is ", recall_score(y_test, predictions4))
+print(" Precision is ", precision_score(y_test, predictions4))
+print(" F1 score is ", f1_score(y_test, predictions4))
+# Accuracy score doesn't matter here aws this is a skew dataset.
+print(" Accuracy score is ", accuracy_score(y_test, predictions4))
+print(confusion_matrix(y_test, predictions4))
+
+
+final_predictions = []
+
+for i in range(len(x_test)):
+    tmp = [predictions[i], predictions3[i], predictions4[i]]
+    final_predictions.append(max(set(tmp), key = tmp.count))
+
+final_predictions = np.asarray(final_predictions)
+
+print(" Recall is ", recall_score(y_test, final_predictions))
+print(" Precision is ", precision_score(y_test, final_predictions))
+print(" F1 score is ", f1_score(y_test, final_predictions))
+# Accuracy score doesn't matter here aws this is a skew dataset.
+print(" Accuracy score is ", accuracy_score(y_test, final_predictions))
+print(confusion_matrix(y_test, final_predictions))
