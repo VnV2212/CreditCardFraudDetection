@@ -142,7 +142,7 @@ print(" Accuracy score is ", accuracy_score(y_test2, predictions2))
 print(confusion_matrix(y_test2, predictions2))
 print(classification_report(y_test2, predictions2))
 
-classfier3
+#classfier3
 classifier3 = IsolationForest(n_estimators=100, max_samples=100)
 classifier3.fit(x_train)
 
